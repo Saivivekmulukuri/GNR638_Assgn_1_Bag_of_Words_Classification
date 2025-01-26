@@ -36,9 +36,11 @@ def nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats)
             category for each testing image.
     '''
     
-    CATEGORIES = ['Kitchen', 'Store', 'Bedroom', 'LivingRoom', 'Office',
-              'Industrial', 'Suburb', 'InsideCity', 'TallBuilding', 'Street',
-              'Highway', 'OpenCountry', 'Coast', 'Mountain', 'Forest']
+    CATEGORIES = ['agriculture', 'airplane', 'baseballdiamond', 'beach', 'buildings',
+              'chaparral', 'denseresidential', 'forest', 'freeway', 'golfcourse',
+              'harbor', 'intersection', 'mediumresidential', 'mobilehomepark', 
+              'overpass', 'parkinglot', 'river', 'runway', 'sparseresidential', 
+              'storagetanks', 'tenniscourt']
     K = 1
     
     N = train_image_feats.shape[0]

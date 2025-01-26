@@ -7,7 +7,7 @@ from cyvlfeat.sift.dsift import dsift
 from time import time
 import pdb
 
-def get_bags_of_sifts(image_paths):
+def get_bags_of_sifts(image_paths, vocab_size):
     ############################################################################
     # TODO:                                                                    #
     # This function assumes that 'vocab.pkl' exists and contains an N x 128    #
@@ -34,7 +34,7 @@ def get_bags_of_sifts(image_paths):
         image_feats : (N, d) feature, each row represent a feature of an image
     '''
     
-    with open('vocab.pkl', 'rb') as handle:
+    with open(f'vocab_{vocab_size}.pkl', 'rb') as handle:
         vocab = pickle.load(handle)
     
     image_feats = []
@@ -43,7 +43,7 @@ def get_bags_of_sifts(image_paths):
     print("Construct bags of sifts...")
     
     for path in image_paths:
-        img = np.asarray(Image.open(path),dtype='float32')
+        img = np.asarray(Image.open(path).convert('L'),dtype='float32')
         frames, descriptors = dsift(img, step=[1,1], fast=True)
         dist = distance.cdist(vocab, descriptors, metric='euclidean')
         idx = np.argmin(dist, axis=0)
@@ -55,7 +55,7 @@ def get_bags_of_sifts(image_paths):
     image_feats = np.asarray(image_feats)
     
     end_time = time()
-    print("It takes ", (start_time - end_time), " to construct bags of sifts.")
+    print("It takes ", (end_time - start_time), " to construct bags of sifts.")
     
     #############################################################################
     #                                END OF YOUR CODE                           #

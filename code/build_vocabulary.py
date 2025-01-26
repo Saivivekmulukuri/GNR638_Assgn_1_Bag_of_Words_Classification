@@ -83,7 +83,7 @@ def build_vocabulary(image_paths, vocab_size):
     #pdb.set_trace()
     
     for path in image_paths:
-        img = np.asarray(Image.open(path),dtype='float32')
+        img = np.asarray(Image.open(path).convert('L'),dtype='float32')
         frames, descriptors = dsift(img, step=[5,5], fast=True)
         bag_of_features.append(descriptors)
     bag_of_features = np.concatenate(bag_of_features, axis=0).astype('float32')
@@ -93,7 +93,7 @@ def build_vocabulary(image_paths, vocab_size):
     start_time = time()
     vocab = kmeans(bag_of_features, vocab_size, initialization="PLUSPLUS")        
     end_time = time()
-    print("It takes ", (start_time - end_time), " to compute vocab.")
+    print("It takes ", (end_time - start_time), " to compute vocab.")
     
     
     ##################################################################################

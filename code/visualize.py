@@ -44,12 +44,20 @@ def visualize(CATEGORIES, test_image_paths, test_labels_ids, predicted_categorie
                 FP_name[k] = pred_instance_name[sub_id]
         shutil.copy(Train_name[k], os.path.join(thumbnails_path, name + '_train_' + os.path.basename(Train_name[k])))
         shutil.copy(TP_name[k], os.path.join(thumbnails_path, name + '_TP_' + os.path.basename(TP_name[k])))
-        shutil.copy(FP_name[k], os.path.join(thumbnails_path, name + '_FP_' + os.path.basename(FP_name[k])))
-        shutil.copy(FN_name[k], os.path.join(thumbnails_path, name + '_FN_' + os.path.basename(FN_name[k])))
+        if(FP_name[k] != None):
+            shutil.copy(FP_name[k], os.path.join(thumbnails_path, name + '_FP_' + os.path.basename(FP_name[k])))
+        if(FN_name[k] != None):
+            shutil.copy(FN_name[k], os.path.join(thumbnails_path, name + '_FN_' + os.path.basename(FN_name[k])))
         train_path = os.path.relpath(os.path.join(thumbnails_path, name + '_train_' + os.path.basename(Train_name[k])), results_path)
         tp_path = os.path.relpath(os.path.join(thumbnails_path, name + '_TP_' + os.path.basename(TP_name[k])), results_path)
-        fp_path = os.path.relpath(os.path.join(thumbnails_path, name + '_FP_' + os.path.basename(FP_name[k])), results_path)
-        fn_path = os.path.relpath(os.path.join(thumbnails_path, name + '_FN_' + os.path.basename(FN_name[k])), results_path)
+        if(FP_name[k] != None):
+            fp_path = os.path.relpath(os.path.join(thumbnails_path, name + '_FP_' + os.path.basename(FP_name[k])), results_path)
+        else:
+            fp_path = ""
+        if(FN_name[k] != None):
+            fn_path = os.path.relpath(os.path.join(thumbnails_path, name + '_FN_' + os.path.basename(FN_name[k])), results_path)
+        else:
+            fn_path = ""
         panel.write('| ' + name + ' | ' + '![]('+train_path+')' + ' | ' + '![]('+tp_path+')' + ' | ' + '![]('+fp_path+')' + ' | ' + '![]('+fn_path+')' + ' |' + '\n')
         
     panel.write('\n')
